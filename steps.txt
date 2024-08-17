@@ -271,4 +271,31 @@ class ProfileUpdateForm(forms.ModelForm):
     }
     return render(request, 'users/profile.html', context) "
 
-5) 
+-- CRUD --
+
+1) There many class based views we can include so to begin with import
+    " from django.views.generic import ListView " 
+
+2) def a class and connect the model with that
+    " class PostListView(ListView):
+    model = Post "
+
+3) And change the Urls.py file for the rendering
+    " path("", PostListView.as_view(), name = 'blog-home'), "
+
+4) ad the above method will result as an Error so just point out that where it should look for the template with
+    " template_name = 'blog/home.html' -> telling that it can take it from here
+    context_object_name = 'posts' > getting the context from the above defined function
+    ordering = '-date_posted' " -> ordering the post with the date order
+
+5) Create a Detail view for 'when you are clicking any one of the blog it should get to page so'
+    views.py
+    " class PostDetailView(DetailView):
+    model = Post "
+
+    urls.py
+    " path("post/<int:pk>/", PostDetailView.as_view(), name='post-detail'), "
+
+    create a new Html page in template for post_detail and change like this
+        " <h2 class="article-title">{{ object.title }}</h2>
+        <p class="article-content">{{ object.content }}</p> "
